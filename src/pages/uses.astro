@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+
+const groups = [
+  {
+    title: 'Daily driver',
+    items: [
+      ['Editor', 'VS Code + terminal, mostly. Neovim when SSH is the only option.'],
+      ['Agents', 'Codex and Claude Code for implementation, review and debugging — with the output read, not trusted.'],
+      ['Models', 'Frontier general models for reasoning; smaller fast ones for triage, naming and boilerplate.'],
+      ['Language', 'Java and Python for services, TypeScript when there is a UI or an MCP server to write.'],
+    ],
+  },
+  {
+    title: 'Backend',
+    items: [
+      ['Services', 'Java + Helidon for production services; FastAPI and Node for prototypes.'],
+      ['Messaging', 'Kafka-style topics, RabbitMQ, OCI Streaming, Azure Event Hub.'],
+      ['Data', 'Oracle NoSQL, Postgres, MongoDB, SQLite. SQL until it hurts, then denormalise deliberately.'],
+      ['Observability', 'Metrics first. MicroProfile and Dropwizard adapters, dashboards, alerts that someone actually reads.'],
+    ],
+  },
+  {
+    title: 'Retrieval & AI',
+    items: [
+      ['Search', 'OpenSearch for index, vector and hybrid retrieval; HNSW when the dataset is small enough to be simple.'],
+      ['RAG', 'Chunk → embed → retrieve → reroute → rerank → assemble. Every arrow is a place to lose the answer.'],
+      ['Evaluation', 'Fixed question sets over vibes. If it cannot fail, it is not a test.'],
+      ['Agents', 'MCP for tool surfaces, OAuth 2.0 + PKCE for permission, transcripts for audit.'],
+    ],
+  },
+  {
+    title: 'Interactive',
+    items: [
+      ['3D', 'Three.js for the browser, C++17 + Emscripten when the physics has to be the same everywhere.'],
+      ['XR', 'WebXR sessions and controllers. Currently untested on a headset — that gap is stated on the project page.'],
+      ['Teaching', 'vislab for visual explanations; probe points and live parameters beat screenshots.'],
+    ],
+  },
+  {
+    title: 'Writing & thinking',
+    items: [
+      ['Notes', 'Obsidian, with MCP servers so agents can read and write the vault safely.'],
+      ['Diagrams', 'Excalidraw for anything with an arrow in it.'],
+      ['Reading', 'Papers on retrieval and evaluation, post-mortems, and other people’s failure notes.'],
+    ],
+  },
+];
+---
+
+<Base
+  title="Uses"
+  description="The tools, models and stacks Sanjay M Santhosh actually uses — and where each one earns its place."
+>
+  <section class="wrap" style="padding-block: var(--s8) var(--s6)">
+    <p class="eyebrow">Uses</p>
+    <h1 class="display" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: var(--s3)">
+      What I actually run.
+    </h1>
+    <p class="lead" style="margin-top: var(--s4)">
+      Not a wishlist. Every line is something in use this month, with the reason it survived
+      and — where relevant — what it replaced.
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--s9); max-width: 78ch">
+    <div class="uses">
+      {groups.map((g) => (
+        <div class="uses__group">
+          <h2>{g.title}</h2>
+          <ul class="uses__list">
+            {g.items.map(([name, why]) => (
+              <li><b>{name}</b><span>{why}</span></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <p class="meta" style="margin-top: var(--s7); text-transform: none; letter-spacing: 0">
+      Deliberately absent: anything I have only read about. If it is not here, I have not
+      shipped with it yet.
+    </p>
+  </section>
+</Base>

@@ -42,6 +42,7 @@ const archiveGroups = [
       {themes.map((t) => (
         <button type="button" data-filter={t} aria-pressed="false">{label(t)}</button>
       ))}
+      <button type="button" class="surprise" id="surprise">Surprise me</button>
     </div>
 
     <div class="work-grid" id="work-grid">
@@ -88,7 +89,7 @@ const archiveGroups = [
   </section>
 
   <script>
-    const buttons = document.querySelectorAll<HTMLButtonElement>('#filters button');
+    const buttons = document.querySelectorAll<HTMLButtonElement>('#filters button[data-filter]');
     const items = document.querySelectorAll<HTMLElement>('#work-grid .work-item');
 
     const apply = (filter: string) => {
@@ -100,5 +101,20 @@ const archiveGroups = [
     };
 
     buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')));
+
+    // Surprise me — jump to a random archive repo
+    document.getElementById('surprise')?.addEventListener('click', () => {
+      const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.archive a'));
+      if (!links.length) return;
+      const pick = links[Math.floor(Math.random() * links.length)];
+      pick.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      pick.animate(
+        [
+          { background: 'var(--accent-tint)' },
+          { background: 'transparent' },
+        ],
+        { duration: 1600, easing: 'ease-out' }
+      );
+    });
   </script>
 </Base>

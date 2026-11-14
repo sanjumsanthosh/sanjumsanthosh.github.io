@@ -44,6 +44,15 @@ const fullTitle = title.includes('Sanjay') ? title : `${title} — Sanjay M Sant
     />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- set detox preference before first paint to avoid a flash -->
+    <script is:inline>
+      try {
+        if (localStorage.getItem('detox') === 'on') {
+          document.documentElement.dataset.detox = 'on';
+        }
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -52,5 +61,48 @@ const fullTitle = title.includes('Sanjay') ? title : `${title} — Sanjay M Sant
       <slot />
     </main>
     <Footer />
+
+    <script>
+      const root = document.documentElement;
+      const KEY = 'detox';
+
+      const isOn = () => root.dataset.detox === 'on';
+
+      function sync() {
+        const on = isOn();
+        document.querySelectorAll<HTMLButtonElement>('[data-detox-toggle]').forEach((btn) => {
+          btn.setAttribute('aria-pressed', String(on));
+          btn.textContent = on ? 'detox: on' : 'detox: off';
+        });
+      }
+
+      function set(on: boolean) {
+        root.dataset.detox = on ? 'on' : 'off';
+        try {
+          localStorage.setItem(KEY, on ? 'on' : 'off');
+        } catch (e) {}
+        sync();
+      }
+
+      function toggle() {
+        set(!isOn());
+      }
+
+      sync();
+
+      document.querySelectorAll('[data-detox-toggle]').forEach((btn) => {
+        btn.addEventListener('click', toggle);
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (e.key.toLowerCase() !== 'd') return;
+        const t = e.target as HTMLElement | null;
+        if (t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+        if (t && t.isContentEditable) return;
+        e.preventDefault();
+        toggle();
+      });
+    </script>
   </body>
 </html>

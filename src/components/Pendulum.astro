@@ -1,0 +1,249 @@
+---
+/**
+ * Fig. 1 — a live damped pendulum.
+ * Same integrator family as xr-pendulum-lab, rendered flat.
+ * Drag the bob to perturb it. Static frame when reduced motion is requested.
+ */
+---
+
+<figure class="plate" id="fig-pendulum">
+  <canvas id="pendulum-canvas" aria-label="Interactive damped pendulum simulation" role="img"></canvas>
+  <figcaption class="plate__caption">
+    <span class="plate__label">Fig. 1</span>
+    <span>damped pendulum · semi-implicit Euler · drag the bob</span>
+    <button class="plate__play" id="pendulum-play" type="button" hidden>play</button>
+    <span class="plate__live" id="pendulum-state">running</span>
+  </figcaption>
+</figure>
+
+<script>
+  const canvas = document.getElementById('pendulum-canvas') as HTMLCanvasElement | null;
+  const stateEl = document.getElementById('pendulum-state');
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+
+    // state: angle from vertical, angular velocity
+    let theta = 0.62;
+    let omega = 0;
+    const g = 9.81;
+    let L = 1;
+    let damping = 0.32;
+
+    let dragging = false;
+    let raf = 0;
+    let last = 0;
+    let visible = true;
+
+    const trail: Array<{ x: number; y: number }> = [];
+
+    const css = (name: string, fallback: string) =>
+      getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
+
+    let ink = css('--ink', '#14100e');
+    let accent = css('--accent', '#c4451f');
+    let rule = css('--rule-strong', '#c7bdb1');
+
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = rect.width;
+      h = rect.height;
+      canvas!.width = Math.round(w * dpr);
+      canvas!.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      L = Math.min(h * 0.62, w * 0.28);
+    }
+
+    function pivot() {
+      return { x: w / 2, y: h * 0.2 };
+    }
+
+    function bob() {
+      const p = pivot();
+      return { x: p.x + Math.sin(theta) * L, y: p.y + Math.cos(theta) * L };
+    }
+
+    function draw() {
+      ink = css('--ink', '#14100e');
+      accent = css('--accent', '#c4451f');
+      rule = css('--rule-strong', '#c7bdb1');
+
+      ctx.clearRect(0, 0, w, h);
+      const p = pivot();
+      const b = bob();
+
+      // arc guide
+      ctx.beginPath();
+      ctx.strokeStyle = rule;
+      ctx.setLineDash([2, 4]);
+      ctx.lineWidth = 1;
+      ctx.arc(p.x, p.y, L, Math.PI * 0.18, Math.PI * 0.82);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // trail
+      if (trail.length > 1) {
+        ctx.beginPath();
+        ctx.strokeStyle = accent;
+        ctx.globalAlpha = 0.25;
+        ctx.lineWidth = 1;
+        trail.forEach((pt, i) => (i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y)));
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+
+      // rod
+      ctx.beginPath();
+      ctx.strokeStyle = ink;
+      ctx.lineWidth = 1.25;
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+
+      // pivot
+      ctx.beginPath();
+      ctx.fillStyle = ink;
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fill();
+
+      // bob
+      ctx.beginPath();
+      ctx.fillStyle = accent;
+      ctx.arc(b.x, b.y, dragging ? 9 : 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (dragging) {
+        ctx.beginPath();
+        ctx.strokeStyle = accent;
+        ctx.globalAlpha = 0.4;
+        ctx.lineWidth = 1;
+        ctx.arc(b.x, b.y, 13, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function step(dt: number) {
+      // semi-implicit Euler, sub-stepped for stability
+      const sub = 4;
+      const d = dt / sub;
+      for (let i = 0; i < sub; i++) {
+        const alpha = -(g / L) * Math.sin(theta) - damping * omega;
+        omega += alpha * d;
+        theta += omega * d;
+      }
+
+      const b = bob();
+      trail.push(b);
+      if (trail.length > 90) trail.shift();
+    }
+
+    function frame(t: number) {
+      if (!last) last = t;
+      const dt = Math.min((t - last) / 1000, 0.05);
+      last = t;
+
+      if (!dragging) step(dt);
+      draw();
+
+      if (visible && !reduced) raf = requestAnimationFrame(frame);
+      else raf = 0;
+    }
+
+    function start() {
+      if (raf || reduced) return;
+      last = 0;
+      raf = requestAnimationFrame(frame);
+      if (stateEl) stateEl.textContent = 'running';
+    }
+
+    function stop() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      if (stateEl) stateEl.textContent = 'paused';
+    }
+
+    // --- interaction ---
+    const pointer = (e: PointerEvent) => {
+      const r = canvas!.getBoundingClientRect();
+      return { x: e.clientX - r.left, y: e.clientY - r.top };
+    };
+
+    canvas.addEventListener('pointerdown', (e) => {
+      const pt = pointer(e);
+      const b = bob();
+      const dist = Math.hypot(pt.x - b.x, pt.y - b.y);
+      if (dist > 40) return;
+      dragging = true;
+      omega = 0;
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = 'grabbing';
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      const pt = pointer(e);
+      if (!dragging) {
+        const b = bob();
+        canvas.style.cursor = Math.hypot(pt.x - b.x, pt.y - b.y) < 40 ? 'grab' : 'default';
+        return;
+      }
+      const p = pivot();
+      theta = Math.atan2(pt.x - p.x, Math.max(pt.y - p.y, 1));
+      trail.length = 0;
+      draw();
+    });
+
+    const release = () => {
+      if (!dragging) return;
+      dragging = false;
+      omega = 0;
+      canvas.style.cursor = 'grab';
+      start();
+    };
+    canvas.addEventListener('pointerup', release);
+    canvas.addEventListener('pointercancel', release);
+
+    // --- lifecycle ---
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries[0]?.isIntersecting ?? true;
+        if (visible) start();
+        else stop();
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(canvas);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else if (visible) start();
+    });
+
+    new ResizeObserver(() => {
+      resize();
+      draw();
+    }).observe(canvas);
+
+    resize();
+    const playBtn = document.getElementById('pendulum-play') as HTMLButtonElement | null;
+    if (reduced) {
+      if (stateEl) stateEl.textContent = 'static';
+      if (playBtn) {
+        playBtn.hidden = false;
+        playBtn.addEventListener('click', () => {
+          playBtn.hidden = true;
+          start();
+        });
+      }
+      draw();
+    } else {
+      start();
+    }
+  }
+</script>

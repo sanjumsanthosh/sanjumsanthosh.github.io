@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import Pendulum from '../components/Pendulum.astro';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects')).sort(
@@ -9,6 +10,31 @@ const projects = (await getCollection('projects')).sort(
 const featured = projects.filter((p) => p.data.featured);
 const signature = featured.slice(0, 3);
 const rest = featured.slice(3);
+
+const receipts = [
+  { n: '5', label: 'years at Oracle' },
+  { n: '6', label: 'outstanding evaluations' },
+  { n: '6', label: 'case studies' },
+  { n: '38', label: 'public repositories' },
+];
+
+const corrections = [
+  {
+    year: '2026',
+    title: 'I published a speedup without an accuracy number',
+    body: 'The INT8 benchmark showed 2× lower latency and I nearly wrote "quantization works". FP32 and INT8 disagreed on top-1 predictions, so the honest claim is narrower: this measures latency. The page says that now.',
+  },
+  {
+    year: '2026',
+    title: 'I reverted my own fail-fast guard',
+    body: 'I added a startup guard that rejected a blank proxy host when the Azure proxy was enabled. It broke startup in a configuration I had not considered. Reverted it and put the direct config path back, with a test for the blank-host case this time.',
+  },
+  {
+    year: '2025',
+    title: 'I trusted a green pipeline over the artefact',
+    body: 'A release build passed while the signed JAR was broken downstream. The lesson stuck: verify the thing that ships, not the job that says it shipped.',
+  },
+];
 
 const capabilities = [
   {
@@ -33,7 +59,7 @@ const capabilities = [
 <Base>
   <section class="hero wrap">
     <div class="hero__meta meta">
-      <span>Bengaluru / Kerala, India</span>
+      <span>Kerala, India</span>
       <span>Backend · retrieval · applied AI</span>
       <span>Open to senior roles</span>
     </div>
@@ -50,7 +76,27 @@ const capabilities = [
 
     <div class="hero__actions">
       <a class="link-arrow" href="/work/">See the work <span aria-hidden="true">→</span></a>
-      <a class="link-arrow" href="/about/">About me <span aria-hidden="true">→</span></a>
+      <a class="link-arrow" href="/notes/">Field notes <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div style="margin-top: var(--s7); max-width: 640px">
+      <Pendulum />
+      <p class="meta" style="margin-top: var(--s2); text-transform: none; letter-spacing: 0">
+        Every figure on this site is something I actually built. This one is the physics core
+        from <a class="link-plain" href="/work/xr-pendulum-lab/">XR Pendulum Lab</a>, flattened
+        into 2D so it loads in a few hundred bytes of script.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--s7)">
+    <div class="receipts">
+      {receipts.map((r) => (
+        <div class="receipt">
+          <b>{r.n}</b>
+          <span>{r.label}</span>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -68,6 +114,31 @@ const capabilities = [
       <p class="eyebrow">Also recent</p>
       <div class="card-grid" style="margin-top: var(--s6)">
         {rest.map((p, i) => <ProjectCard project={p} index={i + signature.length} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <div style="max-width: 62ch">
+        <p class="eyebrow">Corrections</p>
+        <h2 style="margin-top: var(--s3)">Things I got wrong</h2>
+        <p class="lead" style="margin-top: var(--s3)">
+          Kept on purpose. A portfolio that only lists wins is a brochure, and I have been
+          corrected enough times to think the corrections are the useful part.
+        </p>
+      </div>
+
+      <div class="corrections" style="margin-top: var(--s6); max-width: 72ch">
+        {corrections.map((c) => (
+          <div class="correction">
+            <span class="correction__year">{c.year}</span>
+            <div>
+              <h3>{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>

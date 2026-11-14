@@ -2,11 +2,11 @@
 const path = Astro.url.pathname;
 const links = [
   { href: '/work/', label: 'Work' },
+  { href: '/notes/', label: 'Notes' },
+  { href: '/uses/', label: 'Uses' },
   { href: '/about/', label: 'About' },
-  { href: '/resume.pdf', label: 'Résumé' },
 ];
-const isCurrent = (href: string) =>
-  href !== '/resume.pdf' && (path === href || path.startsWith(href));
+const isCurrent = (href: string) => path === href || path.startsWith(href);
 ---
 
 <header class="site-header">
@@ -14,13 +14,9 @@ const isCurrent = (href: string) =>
     <a class="brand" href="/">Sanjay M Santhosh <span>/ engineer</span></a>
     <nav class="nav" aria-label="Primary">
       {links.map((l) => (
-        <a
-          href={l.href}
-          aria-current={isCurrent(l.href) ? 'page' : undefined}
-          target={l.href.endsWith('.pdf') ? '_blank' : undefined}
-          rel={l.href.endsWith('.pdf') ? 'noopener' : undefined}
-        >{l.label}</a>
+        <a href={l.href} aria-current={isCurrent(l.href) ? 'page' : undefined}>{l.label}</a>
       ))}
+      <a href="/resume.pdf" target="_blank" rel="noopener">Résumé</a>
     </nav>
   </div>
 </header>

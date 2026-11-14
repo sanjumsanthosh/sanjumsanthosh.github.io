@@ -9,13 +9,25 @@ const links = [
 ---
 
 <footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <p class="meta">© {year} Sanjay M Santhosh · built with Astro</p>
-    <div class="site-footer__links">
-      {links.map((l) => (
-        <a href={l.href} target={l.href.startsWith('http') || l.href.endsWith('.pdf') ? '_blank' : undefined}
-           rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a>
-      ))}
+  <div class="wrap">
+    <div class="site-footer__inner">
+      <p class="meta">© {year} Sanjay M Santhosh · built with Astro</p>
+      <div class="site-footer__links">
+        {links.map((l) => (
+          <a
+            href={l.href}
+            target={l.href.startsWith('http') || l.href.endsWith('.pdf') ? '_blank' : undefined}
+            rel={l.href.startsWith('http') ? 'noopener' : undefined}
+          >{l.label}</a>
+        ))}
+      </div>
     </div>
+
+    <p class="meta" style="margin-top: var(--s4); text-transform: none; letter-spacing: 0; max-width: 66ch">
+      No tracking, no cookie banner, no newsletter modal. If the typography is too much,
+      press <kbd style="font-family: var(--mono); border: 1px solid var(--rule-strong); border-radius: 2px; padding: 0 4px">d</kbd>
+      — or <button class="detox-toggle" type="button" data-detox-toggle aria-pressed="false">detox: off</button>.
+      It strips the site back to plain mono, which is also how I practice coding without AI.
+    </p>
   </div>
 </footer>

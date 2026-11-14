@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+
+const notes = [
+  {
+    date: 'Nov 2026',
+    tag: 'agents',
+    title: 'An agent that finishes is not an agent that is right',
+    body: [
+      'The first version of my agent harness measured success as "the run completed". That number looked great and meant almost nothing. A run can complete with a half-finished refactor, a test suite it edited to pass, or a change a reviewer would reject in ten seconds.',
+      'What actually predicts trust is narrower: did the change survive review, and would the next person understand why. That is harder to instrument, which is exactly why most agent benchmarks skip it.',
+    ],
+  },
+  {
+    date: 'Oct 2026',
+    tag: 'retrieval',
+    title: 'Chunking is a product decision wearing an engineering costume',
+    body: [
+      'Chunk size looks like a tuning parameter. It is not. It decides what a retriever can ever return, so it silently sets the ceiling on answer quality before a model is involved.',
+      'The useful move was to evaluate chunking against the questions people actually ask, not against a generic relevance set. Retrieval quality stopped being a number and became a list of specific questions we could not answer.',
+    ],
+  },
+  {
+    date: 'Sep 2026',
+    tag: 'permissions',
+    title: 'Authorization should be re-checked per tool call, not per session',
+    body: [
+      'A session that was authorized an hour ago is a historical fact, not a permission. When tools act on real systems, the check has to happen at the moment of the call, against the caller as they are now.',
+      'Building the OAuth + PKCE flow this way cost more than a session-scoped token, and it removed an entire class of "the agent did something the user could not have done" bug.',
+    ],
+  },
+];
+---
+
+<Base
+  title="Field notes"
+  description="Short notes on agent reliability, retrieval and permissions — written from work rather than reading."
+>
+  <section class="wrap" style="padding-block: var(--s8) var(--s6)">
+    <p class="eyebrow">Field notes</p>
+    <h1 class="display" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: var(--s3)">
+      Short things I learned the hard way.
+    </h1>
+    <p class="lead" style="margin-top: var(--s4)">
+      Not essays. One observation each, usually from a mistake, always from something built.
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--s9); max-width: 78ch">
+    {notes.map((n) => (
+      <article class="note">
+        <p class="note__meta">{n.date}<br />{n.tag}</p>
+        <div>
+          <h3>{n.title}</h3>
+          {n.body.map((p) => <p>{p}</p>)}
+        </div>
+      </article>
+    ))}
+
+    <p class="meta" style="margin-top: var(--s6); text-transform: none; letter-spacing: 0">
+      Longer write-ups are in progress. If you want one on something specific — agent
+      evaluation, RAG failure modes, MCP permissions — <a class="link-plain" href="mailto:sanjumsanthosh@gmail.com">ask</a>.
+    </p>
+  </section>
+</Base>
