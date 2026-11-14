@@ -1,0 +1,306 @@
+[
+  {
+    "name": "Copilot-Detox",
+    "desc": "Copilot Detox is a terminal app that helps developers prevent AI skill atrophy by scheduling “Raw Mode” sessions where you solve tasks without AI help, then uses GitHub Copilot CLI to grade and explain your solution after you submit it.",
+    "lang": "Shell",
+    "url": "https://github.com/sanjumsanthosh/Copilot-Detox",
+    "year": 2026,
+    "group": "agents"
+  },
+  {
+    "name": "Hello-WebGL",
+    "desc": "Just a hello world for me in WebGL",
+    "lang": "JavaScript",
+    "url": "https://github.com/sanjumsanthosh/Hello-WebGL",
+    "year": 2026,
+    "group": "web"
+  },
+  {
+    "name": "kokoro-reader",
+    "desc": null,
+    "lang": "Rust",
+    "url": "https://github.com/sanjumsanthosh/kokoro-reader",
+    "year": 2026,
+    "group": "systems"
+  },
+  {
+    "name": "Bookmark-Manager",
+    "desc": "Smart Bookmark Cleaner - Find Duplicates, Organize Folders, Clean Up Chaos (Tested for Chrome Only)",
+    "lang": "HTML",
+    "url": "https://github.com/sanjumsanthosh/Bookmark-Manager",
+    "year": 2025,
+    "group": "web"
+  },
+  {
+    "name": "Personal-Automation",
+    "desc": null,
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/Personal-Automation",
+    "year": 2025,
+    "group": "systems"
+  },
+  {
+    "name": "What-went-wrong",
+    "desc": null,
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/What-went-wrong",
+    "year": 2025,
+    "group": "systems"
+  },
+  {
+    "name": "Anki-helper",
+    "desc": "A helper webpage which can be integrated with Anki localhost ",
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/Anki-helper",
+    "year": 2024,
+    "group": "web"
+  },
+  {
+    "name": "Anki-helper-companion",
+    "desc": "A companion Bun server for anki helper project",
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/Anki-helper-companion",
+    "year": 2024,
+    "group": "web"
+  },
+  {
+    "name": "DocArray-Mnist",
+    "desc": "A sample project to test out DocArray using Mnist dataset",
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/DocArray-Mnist",
+    "year": 2024,
+    "group": "data"
+  },
+  {
+    "name": "dreambooth",
+    "desc": null,
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/dreambooth",
+    "year": 2024,
+    "group": "ml"
+  },
+  {
+    "name": "Learning-abt-opensearch",
+    "desc": "Trying to learn about opensearch and its configurations",
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/Learning-abt-opensearch",
+    "year": 2024,
+    "group": "systems"
+  },
+  {
+    "name": "Local-LLM-Setup-Tutorial",
+    "desc": "Just a try out with some local setup to see which libraries and frameworks best suit me",
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/Local-LLM-Setup-Tutorial",
+    "year": 2024,
+    "group": "agents"
+  },
+  {
+    "name": "node-psql-example",
+    "desc": "An example project on node and plsql",
+    "lang": "JavaScript",
+    "url": "https://github.com/sanjumsanthosh/node-psql-example",
+    "year": 2024,
+    "group": "data"
+  },
+  {
+    "name": "Opensearch_dev_ui",
+    "desc": null,
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/Opensearch_dev_ui",
+    "year": 2024,
+    "group": "web"
+  },
+  {
+    "name": "RabbitMQ-Try-out",
+    "desc": "Just trying out how rabbit mq works with python",
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/RabbitMQ-Try-out",
+    "year": 2024,
+    "group": "data"
+  },
+  {
+    "name": "Sanjays-template-vault",
+    "desc": null,
+    "lang": "JavaScript",
+    "url": "https://github.com/sanjumsanthosh/Sanjays-template-vault",
+    "year": 2024,
+    "group": "systems"
+  },
+  {
+    "name": "TradeCoding-Tryout",
+    "desc": null,
+    "lang": null,
+    "url": "https://github.com/sanjumsanthosh/TradeCoding-Tryout",
+    "year": 2024,
+    "group": "systems"
+  },
+  {
+    "name": "tsed-vm-event",
+    "desc": "TSED based sample event driven system. ",
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/tsed-vm-event",
+    "year": 2024,
+    "group": "data"
+  },
+  {
+    "name": "Windows-helper-scripts",
+    "desc": null,
+    "lang": null,
+    "url": "https://github.com/sanjumsanthosh/Windows-helper-scripts",
+    "year": 2024,
+    "group": "systems"
+  },
+  {
+    "name": "Auto-classifier",
+    "desc": null,
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/Auto-classifier",
+    "year": 2023,
+    "group": "web"
+  },
+  {
+    "name": "FastApi-Experiments",
+    "desc": "Experimenting on fastapi",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/FastApi-Experiments",
+    "year": 2023,
+    "group": "systems"
+  },
+  {
+    "name": "nextjs-experiments",
+    "desc": "Testing out some nextjs stuff..",
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/nextjs-experiments",
+    "year": 2023,
+    "group": "web"
+  },
+  {
+    "name": "Random-Tab-Opener",
+    "desc": null,
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/Random-Tab-Opener",
+    "year": 2023,
+    "group": "web"
+  },
+  {
+    "name": "StudentTracker",
+    "desc": null,
+    "lang": "TypeScript",
+    "url": "https://github.com/sanjumsanthosh/StudentTracker",
+    "year": 2023,
+    "group": "web"
+  },
+  {
+    "name": "Ticket-Manager",
+    "desc": "This is a sample Java application for managing movie tickets",
+    "lang": null,
+    "url": "https://github.com/sanjumsanthosh/Ticket-Manager",
+    "year": 2023,
+    "group": "systems"
+  },
+  {
+    "name": "Learn_Pytest",
+    "desc": null,
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/Learn_Pytest",
+    "year": 2022,
+    "group": "systems"
+  },
+  {
+    "name": "Single-image-per-person-1",
+    "desc": "Rudementary approch to single imagae per person for digital image processing S7",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/Single-image-per-person-1",
+    "year": 2021,
+    "group": "systems"
+  },
+  {
+    "name": "AutoEncoder_basic",
+    "desc": "Implementing PCA using autoencoders and Basic CNN auto-encoders",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/AutoEncoder_basic",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "Cancer-cell-Detection-cookbook",
+    "desc": "pytorch implementation of Deep learning network for kaggle challenge cancer cell detection",
+    "lang": null,
+    "url": "https://github.com/sanjumsanthosh/Cancer-cell-Detection-cookbook",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "Covid_19_in_India",
+    "desc": "Capstone project for advanced data science by IBM",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/Covid_19_in_India",
+    "year": 2020,
+    "group": "data"
+  },
+  {
+    "name": "Cv_Research_lab_website",
+    "desc": null,
+    "lang": "CSS",
+    "url": "https://github.com/sanjumsanthosh/Cv_Research_lab_website",
+    "year": 2020,
+    "group": "web"
+  },
+  {
+    "name": "Generating-names-with-recurrent-neural-networks",
+    "desc": "Generating names with RNN - Pytorch",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/Generating-names-with-recurrent-neural-networks",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "NeMo_voice_swap",
+    "desc": null,
+    "lang": "Python",
+    "url": "https://github.com/sanjumsanthosh/NeMo_voice_swap",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "Predict-future-sales",
+    "desc": "Kaggle competition : predict future sales",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/Predict-future-sales",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "Pytorch-Computer-Vision-Cookbook",
+    "desc": "Computer vision and deep learning using Pytorch - Michael Avendi",
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/Pytorch-Computer-Vision-Cookbook",
+    "year": 2020,
+    "group": "ml"
+  },
+  {
+    "name": "RFID-Based-realtime-attendance-system",
+    "desc": "A realtime RFID based Attendance system with andoid support.Syncs real time with firebase realtime database.",
+    "lang": "Dart",
+    "url": "https://github.com/sanjumsanthosh/RFID-Based-realtime-attendance-system",
+    "year": 2020,
+    "group": "data"
+  },
+  {
+    "name": "cat-vs-dogs-shallow-net",
+    "desc": null,
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/cat-vs-dogs-shallow-net",
+    "year": 2019,
+    "group": "ml"
+  },
+  {
+    "name": "human-detection",
+    "desc": null,
+    "lang": "Jupyter Notebook",
+    "url": "https://github.com/sanjumsanthosh/human-detection",
+    "year": 2019,
+    "group": "ml"
+  }
+]

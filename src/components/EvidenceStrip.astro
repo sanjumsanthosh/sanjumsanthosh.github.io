@@ -1,0 +1,13 @@
+---
+interface Props {
+  evidence?: string[];
+}
+const { evidence = [] } = Astro.props;
+const strong = new Set(['repo', 'demo', 'award', 'metric']);
+---
+
+<div class="evidence" aria-label="Evidence">
+  {evidence.map((e) => (
+    <span class:list={[{ 'is-strong': strong.has(e) }]}>{e}</span>
+  ))}
+</div>

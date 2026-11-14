@@ -1,0 +1,46 @@
+---
+import EvidenceStrip from './EvidenceStrip.astro';
+
+interface Props {
+  project: {
+    id: string;
+    data: {
+      title: string;
+      summary: string;
+      year: string;
+      themes: string[];
+      stack: string[];
+      evidence: string[];
+      cover?: string;
+    };
+  };
+  index?: number;
+}
+
+const { project, index } = Astro.props;
+const { title, summary, year, themes, evidence, cover } = project.data;
+const glyph = title.trim().charAt(0).toUpperCase();
+const plate = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
+---
+
+<article class="pcard work-item" data-themes={themes.join(' ')}>
+  <div class="pcard__figure" aria-hidden="true">
+    {cover ? (
+      <img src={cover} alt="" loading="lazy" />
+    ) : (
+      <>
+        {plate && <span class="pcard__plate">{plate}</span>}
+        <span class="pcard__glyph">{glyph}</span>
+        <span class="pcard__year">{year}</span>
+      </>
+    )}
+  </div>
+  <div class="pcard__body">
+    <p class="meta">{year} · {themes[0]?.replace(/-/g, ' ')}</p>
+    <h3 class="pcard__title"><a href={`/work/${project.id}/`}>{title}</a></h3>
+    <p class="pcard__summary">{summary}</p>
+    <div class="pcard__foot">
+      <EvidenceStrip evidence={evidence} />
+    </div>
+  </div>
+</article>

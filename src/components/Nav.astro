@@ -1,0 +1,26 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: '/work/', label: 'Work' },
+  { href: '/about/', label: 'About' },
+  { href: '/resume.pdf', label: 'Résumé' },
+];
+const isCurrent = (href: string) =>
+  href !== '/resume.pdf' && (path === href || path.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="/">Sanjay M Santhosh <span>/ engineer</span></a>
+    <nav class="nav" aria-label="Primary">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          aria-current={isCurrent(l.href) ? 'page' : undefined}
+          target={l.href.endsWith('.pdf') ? '_blank' : undefined}
+          rel={l.href.endsWith('.pdf') ? 'noopener' : undefined}
+        >{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>

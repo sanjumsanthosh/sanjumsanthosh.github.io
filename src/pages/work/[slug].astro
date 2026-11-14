@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import EvidenceStrip from '../../components/EvidenceStrip.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { title, summary, year, status, themes, stack, evidence, links, sanitized } = entry.data;
+const { Content } = await render(entry);
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const idx = all.findIndex((p) => p.id === entry.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+
+const linkLabels: Record<string, string> = { repo: 'Repository', demo: 'Live', post: 'Write-up' };
+---
+
+<Base title={title} description={summary} ogType="article">
+  <article>
+    <header class="article-head wrap">
+      <p class="eyebrow">Case study</p>
+      <h1>{title}</h1>
+      <p class="lead">{summary}</p>
+
+      <div class="article-meta meta">
+        <span>{year}</span>
+        <span>{status}</span>
+        {themes.map((t) => <span>{t.replace(/-/g, ' ')}</span>)}
+      </div>
+
+      <div style="margin-top: var(--s5); display: flex; gap: var(--s5); flex-wrap: wrap; align-items: center">
+        <EvidenceStrip evidence={evidence} />
+        {Object.entries(links).map(([k, v]) =>
+          v ? (
+            <a class="link-arrow" href={v} target="_blank" rel="noopener">
+              {linkLabels[k] ?? k} <span aria-hidden="true">↗</span>
+            </a>
+          ) : null
+        )}
+      </div>
+
+      {sanitized && (
+        <p class="meta" style="margin-top: var(--s5); max-width: 62ch; text-transform: none; letter-spacing: 0">
+          This page describes internal work at architecture level. Details and identifiers are
+          withheld where confidentiality applies.
+        </p>
+      )}
+    </header>
+
+    <div class="article-body wrap">
+      <div class="prose">
+        <Content />
+      </div>
+
+      <table class="spec">
+        <tbody>
+          <tr><th>Stack</th><td>{stack.join(' · ')}</td></tr>
+          <tr><th>Status</th><td>{status}</td></tr>
+          <tr><th>Year</th><td>{year}</td></tr>
+          {links.repo && <tr><th>Source</th><td><a class="link-plain" href={links.repo} target="_blank" rel="noopener">{links.repo.replace('https://github.com/', '')}</a></td></tr>}
+          {links.demo && <tr><th>Live</th><td><a class="link-plain" href={links.demo} target="_blank" rel="noopener">{links.demo.replace('https://', '')}</a></td></tr>}
+        </tbody>
+      </table>
+
+      <nav class="pager" aria-label="Project navigation">
+        {prev ? (
+          <a class="link-arrow" href={`/work/${prev.id}/`}><span aria-hidden="true">←</span> {prev.data.title}</a>
+        ) : <span />}
+        {next ? (
+          <a class="link-arrow" href={`/work/${next.id}/`}>{next.data.title} <span aria-hidden="true">→</span></a>
+        ) : <span />}
+      </nav>
+    </div>
+  </article>
+</Base>

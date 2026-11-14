@@ -1,0 +1,104 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const featured = projects.filter((p) => p.data.featured);
+const signature = featured.slice(0, 3);
+const rest = featured.slice(3);
+
+const capabilities = [
+  {
+    title: 'Retrieval & Gen AI',
+    body: 'RAG pipeline design — chunking, embeddings, vector search, query routing, reranking and context assembly. Evaluation of retrieval quality, not just latency.',
+  },
+  {
+    title: 'Agents & tooling',
+    body: 'MCP servers, scoped tool access, OAuth 2.0 + PKCE, guardrails, audit transcripts and human handoff. Agents that run inside real processes.',
+  },
+  {
+    title: 'Platform & backend',
+    body: 'Java and Python services, event-driven delivery across Kafka-style topics, migration APIs, observability, security triage and release engineering.',
+  },
+  {
+    title: 'Interactive 3D & XR',
+    body: 'WebGL/Three.js scenes, WebXR controllers, C++17 physics compiled to WebAssembly, and learner-facing controls that make a model legible.',
+  },
+];
+---
+
+<Base>
+  <section class="hero wrap">
+    <div class="hero__meta meta">
+      <span>Bengaluru / Kerala, India</span>
+      <span>Backend · retrieval · applied AI</span>
+      <span>Open to senior roles</span>
+    </div>
+
+    <h1 class="display">
+      I build the parts of AI systems that <em>have to work</em> after the demo.
+    </h1>
+
+    <p class="hero__lede">
+      Five years at Oracle on backend and platform systems, and the last two on retrieval
+      and agent infrastructure — scoped tools, permissions, guardrails, and the evaluation
+      that tells you whether any of it is actually working.
+    </p>
+
+    <div class="hero__actions">
+      <a class="link-arrow" href="/work/">See the work <span aria-hidden="true">→</span></a>
+      <a class="link-arrow" href="/about/">About me <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Signature work</p>
+      <div class="card-grid" style="margin-top: var(--s6)">
+        {signature.map((p, i) => <ProjectCard project={p} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Also recent</p>
+      <div class="card-grid" style="margin-top: var(--s6)">
+        {rest.map((p, i) => <ProjectCard project={p} index={i + signature.length} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">What I work on</p>
+      <div class="caps" style="margin-top: var(--s6)">
+        {capabilities.map((c) => (
+          <div class="cap">
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s6); align-items: end; flex-wrap: wrap;">
+        <div>
+          <p class="eyebrow">Get in touch</p>
+          <h2 style="margin-top: var(--s3)">Building something that needs this combination?</h2>
+          <p class="lead" style="margin-top: var(--s4)">
+            I'm interested in applied AI, retrieval and agent platform roles — especially where
+            the systems have to survive contact with real users and real permissions.
+          </p>
+        </div>
+        <a class="link-arrow" href="mailto:sanjumsanthosh@gmail.com">sanjumsanthosh@gmail.com <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</Base>

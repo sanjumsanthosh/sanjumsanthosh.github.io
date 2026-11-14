@@ -1,0 +1,21 @@
+---
+const year = new Date().getFullYear();
+const links = [
+  { href: 'https://github.com/sanjumsanthosh', label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/sanjay-m-santhosh-557101151', label: 'LinkedIn' },
+  { href: 'mailto:sanjumsanthosh@gmail.com', label: 'Email' },
+  { href: '/resume.pdf', label: 'Résumé' },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p class="meta">© {year} Sanjay M Santhosh · built with Astro</p>
+    <div class="site-footer__links">
+      {links.map((l) => (
+        <a href={l.href} target={l.href.startsWith('http') || l.href.endsWith('.pdf') ? '_blank' : undefined}
+           rel={l.href.startsWith('http') ? 'noopener' : undefined}>{l.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>

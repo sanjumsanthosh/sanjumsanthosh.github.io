@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+import archive from '../../data/archive.json';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+  const fa = Number(b.data.featured) - Number(a.data.featured);
+  return fa !== 0 ? fa : a.data.order - b.data.order;
+});
+
+const themes = [...new Set(projects.flatMap((p) => p.data.themes))].sort();
+const label = (t: string) => t.replace(/-/g, ' ');
+
+const archiveGroups = [
+  { key: 'agents', title: 'Agent & tooling experiments' },
+  { key: 'ml', title: 'ML & computer vision foundations' },
+  { key: 'data', title: 'Data, notebooks & coursework' },
+  { key: 'web', title: 'Web & frontend experiments' },
+  { key: 'systems', title: 'Systems & tooling' },
+];
+---
+
+<Base
+  title="Work"
+  description="Projects by Sanjay M Santhosh — retrieval and RAG, agent tooling, platform engineering, and interactive 3D."
+>
+  <section class="wrap" style="padding-block: var(--s8) var(--s6)">
+    <p class="eyebrow">Selected work</p>
+    <h1 class="display" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: var(--s3)">
+      Things I built, and what they actually prove.
+    </h1>
+    <p class="lead" style="margin-top: var(--s4)">
+      Six case studies below, then the long tail of experiments and foundations.
+      Every entry links to source or a live build where one exists.
+    </p>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--s9)">
+    <div class="filters" id="filters">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      {themes.map((t) => (
+        <button type="button" data-filter={t} aria-pressed="false">{label(t)}</button>
+      ))}
+    </div>
+
+    <div class="work-grid" id="work-grid">
+      {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+    </div>
+
+    <noscript>
+      <p class="meta" style="margin-top: var(--s5)">Filtering needs JavaScript — all projects are listed above.</p>
+    </noscript>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Archive</p>
+      <h2 style="margin-top: var(--s3)">Everything else</h2>
+      <p class="lead" style="margin-top: var(--s3); margin-bottom: var(--s6)">
+        Repositories that are foundations, experiments or learning work rather than
+        finished products. Kept because range is easier to see than to claim.
+      </p>
+
+      {archiveGroups.map((g) => {
+        const items = archive.filter((a) => a.group === g.key);
+        if (!items.length) return null;
+        return (
+          <div style="margin-bottom: var(--s7)">
+            <h3 style="font-family: var(--mono); font-size: var(--fs-meta); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--s3)">
+              {g.title}
+            </h3>
+            <ul class="archive">
+              {items.map((r) => (
+                <li>
+                  <div>
+                    <a href={r.url} target="_blank" rel="noopener">{r.name}</a>
+                    {r.desc && <small>{r.desc}</small>}
+                  </div>
+                  <span class="meta">{r.lang ?? '—'} · {r.year}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('#filters button');
+    const items = document.querySelectorAll<HTMLElement>('#work-grid .work-item');
+
+    const apply = (filter: string) => {
+      items.forEach((el) => {
+        const themes = (el.dataset.themes ?? '').split(' ');
+        el.hidden = filter !== 'all' && !themes.includes(filter);
+      });
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
+    };
+
+    buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter ?? 'all')));
+  </script>
+</Base>

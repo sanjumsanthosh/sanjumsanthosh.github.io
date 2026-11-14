@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+
+const experience = [
+  {
+    role: 'Senior Applications Engineer',
+    org: 'Oracle India Private Limited',
+    place: 'Trivandrum, India',
+    period: '2023 — present',
+    points: [
+      'Built retrieval and generative-AI infrastructure: OCI OpenSearch clusters, and end-to-end evaluation of RAG pipelines — chunking, embeddings, vector search, query routing, reranking and context assembly.',
+      'Built a ticket-native agent harness with isolated workspaces, scoped MCP tools, guardrails, audit transcripts and human handoff; implemented permissioned remote MCP over OAuth 2.0 + PKCE.',
+      'Delivered Java/Helidon services and multi-cloud event-driven delivery across Azure Event Hub, OCI Streaming and Kafka-style topics, with observability, security triage and release engineering.',
+    ],
+  },
+  {
+    role: 'Applications Engineer',
+    org: 'Oracle India Private Limited',
+    place: 'Trivandrum, India',
+    period: '2021 — 2023',
+    points: [
+      'Built and maintained Java backend services, REST integrations, SQL-backed product features and event-driven delivery foundations.',
+      'Supported containerized deployments on OCI/Kubernetes and handled on-call production incidents across application, API, deployment and integration layers.',
+    ],
+  },
+];
+
+const skills = [
+  { group: 'Languages', items: ['Python', 'Java', 'TypeScript', 'SQL', 'Bash'] },
+  { group: 'Retrieval & Gen AI', items: ['RAG pipeline design', 'Embeddings & vector search', 'OpenSearch', 'Reranking', 'Retrieval evaluation', 'LLM workflow backends'] },
+  { group: 'Agents', items: ['MCP', 'Tool scoping', 'OAuth 2.0 / PKCE', 'Guardrails', 'Human-in-the-loop', 'Multi-agent orchestration'] },
+  { group: 'Platform', items: ['Microservices', 'Event-driven architecture', 'Kafka', 'REST API design', 'Oracle NoSQL', 'Data modelling'] },
+  { group: 'Cloud & Ops', items: ['OCI', 'Azure', 'GCP', 'Kubernetes', 'Docker', 'Terraform', 'Jenkins', 'Observability'] },
+  { group: 'Interactive', items: ['Three.js', 'WebXR', 'WebAssembly', 'C++17', 'Canvas / WebGL'] },
+];
+---
+
+<Base
+  title="About"
+  description="Sanjay M Santhosh — backend and platform engineer working on retrieval, agent infrastructure and interactive learning systems."
+>
+  <section class="wrap" style="padding-block: var(--s8) var(--s6)">
+    <p class="eyebrow">About</p>
+    <h1 class="display" style="font-size: clamp(2rem, 4vw, 3rem); margin-top: var(--s3)">
+      Backend roots, retrieval and agent systems, and a long interest in explaining things visually.
+    </h1>
+  </section>
+
+  <section class="wrap" style="padding-bottom: var(--s7)">
+    <div class="prose">
+      <p>
+        I'm a software engineer at Oracle, five years in backend and platform work. Most of what I
+        build sits where data moves between systems: event-driven delivery, migration APIs, shared
+        libraries, and the observability that tells you when any of it stops behaving.
+      </p>
+      <p>
+        For the last two years the work has moved toward retrieval and agents. I built OpenSearch
+        infrastructure and evaluated RAG pipelines end to end, and I built the harness my team uses
+        to run developer and QA agents inside real ticket workflows — isolated workspaces, scoped
+        tool access, guardrails, audit transcripts and handoff to a person when a run needs judgement.
+        The permissions work mattered as much as the models: authorization is revalidated per tool
+        call rather than assumed from a session.
+      </p>
+      <p>
+        Outside work I build smaller things to understand the bigger ones — a browser playground for
+        visual explanations, a lab where one C++ physics implementation runs both natively and in a
+        headset, and a benchmark harness that measures quantization honestly enough to admit what it
+        did not test.
+      </p>
+      <p>
+        I care about the unglamorous half of AI engineering: does it still work next month, can
+        someone audit what it did, and would a reviewer have accepted the change.
+      </p>
+    </div>
+
+    <div style="margin-top: var(--s6); display: flex; gap: var(--s5); flex-wrap: wrap">
+      <a class="link-arrow" href="/resume.pdf" target="_blank" rel="noopener">Résumé (PDF) <span aria-hidden="true">↗</span></a>
+      <a class="link-arrow" href="https://github.com/sanjumsanthosh" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      <a class="link-arrow" href="https://www.linkedin.com/in/sanjay-m-santhosh-557101151" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Experience</p>
+      <div style="margin-top: var(--s6)">
+        {experience.map((job) => (
+          <div style="display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--s5); padding-block: var(--s5); border-bottom: 1px solid var(--rule)">
+            <div>
+              <h3 style="margin: 0">{job.role}</h3>
+              <p class="meta" style="margin-top: var(--s1)">{job.org} · {job.place}</p>
+              <ul style="margin-top: var(--s3); padding-left: 1.1em; color: var(--ink-soft); font-size: var(--fs-small)">
+                {job.points.map((p) => <li style="margin-block: var(--s1)">{p}</li>)}
+              </ul>
+            </div>
+            <p class="meta" style="white-space: nowrap">{job.period}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Skills</p>
+      <div class="caps" style="margin-top: var(--s6)">
+        {skills.map((s) => (
+          <div class="cap">
+            <h3>{s.group}</h3>
+            <p>{s.items.join(' · ')}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="eyebrow">Education & recognition</p>
+      <div style="margin-top: var(--s5); display: grid; gap: var(--s5)">
+        <div>
+          <h3 style="margin: 0">B.Tech, Applied Electronics & Instrumentation</h3>
+          <p class="meta" style="margin-top: var(--s1)">College of Engineering, Trivandrum · 2017–2021 · CGPA 9.48/10 · University 4th rank</p>
+        </div>
+        <div>
+          <h3 style="margin: 0">Recognition</h3>
+          <ul style="margin-top: var(--s2); padding-left: 1.1em; color: var(--ink-soft); font-size: var(--fs-small)">
+            <li>Six consecutive Outstanding performance evaluations at Oracle</li>
+            <li>AgentBootCamp — selected and awarded, AI Champions CX 2025</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
