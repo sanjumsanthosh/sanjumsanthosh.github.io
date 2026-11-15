@@ -8,6 +8,7 @@ stack: ["JavaScript", "q5.js", "Canvas", "Sandboxed iframes"]
 evidence: ["repo", "writeup"]
 links:
   repo: "https://github.com/sanjumsanthosh/vislab"
+  demo: "https://sanjumsanthosh.github.io/vislab/"
 featured: true
 order: 1
 ---

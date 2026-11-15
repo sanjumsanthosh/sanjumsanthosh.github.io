@@ -8,6 +8,7 @@ stack: ["C++17", "Emscripten", "WebAssembly", "Three.js", "WebXR"]
 evidence: ["repo"]
 links:
   repo: "https://github.com/sanjumsanthosh/xr-pendulum-lab"
+  demo: "https://sanjumsanthosh.github.io/xr-pendulum-lab/"
 featured: true
 order: 4
 ---

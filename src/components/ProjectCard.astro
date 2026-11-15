@@ -11,6 +11,7 @@ interface Props {
       themes: string[];
       stack: string[];
       evidence: string[];
+      links?: { repo?: string; demo?: string };
       cover?: string;
     };
   };
@@ -19,6 +20,7 @@ interface Props {
 
 const { project, index } = Astro.props;
 const { title, summary, year, themes, evidence, cover } = project.data;
+const demo = project.data.links?.demo;
 const glyph = title.trim().charAt(0).toUpperCase();
 const plate = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
 ---
@@ -41,6 +43,61 @@ const plate = typeof index === 'number' ? String(index + 1).padStart(2, '0') : n
     <p class="pcard__summary">{summary}</p>
     <div class="pcard__foot">
       <EvidenceStrip evidence={evidence} />
+      {demo && (
+        <a class="pcard__live" href={demo} target="_blank" rel="noopener">
+          live <span aria-hidden="true">↗</span>
+        </a>
+      )}
     </div>
   </div>
 </article>
+
+<style>
+  .pcard {
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .pcard:hover,
+  .pcard:focus-within {
+    border-color: var(--rule-strong);
+    box-shadow: 0 12px 30px -24px rgb(20 16 14 / 0.55);
+  }
+
+  .pcard:hover .pcard__glyph {
+    color: var(--accent);
+  }
+
+  .pcard__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s3);
+    flex-wrap: wrap;
+  }
+
+  .pcard__live {
+    position: relative;
+    z-index: 2;
+    font-family: var(--mono);
+    font-size: var(--fs-meta);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--accent);
+    border-bottom: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .pcard__live:hover,
+  .pcard__live:focus-visible {
+    border-bottom-color: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pcard,
+    .pcard:hover {
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

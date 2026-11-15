@@ -8,6 +8,7 @@ stack: ["PyTorch", "ONNX Runtime", "Static INT8 (QDQ)", "Python"]
 evidence: ["repo", "metric"]
 links:
   repo: "https://github.com/sanjumsanthosh/vision-inference-bench"
+  demo: "https://sanjumsanthosh.github.io/vision-inference-bench/"
 featured: true
 order: 6
 ---
