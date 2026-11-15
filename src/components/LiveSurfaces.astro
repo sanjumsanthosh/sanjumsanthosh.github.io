@@ -1,0 +1,278 @@
+---
+interface Surface {
+  name: string;
+  tagline: string;
+  href: string;
+  meta: string;
+  accent: string;
+  motif: 'bars' | 'lines' | 'cells' | 'arc' | 'rows' | 'flag';
+}
+
+const surfaces: Surface[] = [
+  {
+    name: 'Copilot Detox',
+    tagline: 'Practise without AI, get graded after.',
+    href: 'https://sanjumsanthosh.github.io/Copilot-Detox/',
+    meta: 'bash · 1 file',
+    accent: '#2f7d4f',
+    motif: 'lines',
+  },
+  {
+    name: 'Kokoro Reader',
+    tagline: 'Markdown narrated locally, never uploaded.',
+    href: 'https://sanjumsanthosh.github.io/kokoro-reader/',
+    meta: 'rust · tauri',
+    accent: '#b4551f',
+    motif: 'bars',
+  },
+  {
+    name: 'Vision benchmark',
+    tagline: 'FP32 vs INT8, with the caveat attached.',
+    href: 'https://sanjumsanthosh.github.io/vision-inference-bench/',
+    meta: 'onnx · int8',
+    accent: '#2b4f9e',
+    motif: 'bars',
+  },
+  {
+    name: 'XR Pendulum Lab',
+    tagline: 'One physics core, native and in the browser.',
+    href: 'https://sanjumsanthosh.github.io/xr-pendulum-lab/',
+    meta: 'c++ → wasm',
+    accent: '#0e6f7d',
+    motif: 'arc',
+  },
+  {
+    name: 'AgentBootCamp',
+    tagline: 'Adversarial agent cases, scored by team.',
+    href: 'https://sanjumsanthosh.github.io/AgentBootCamp/',
+    meta: 'next · qa schema',
+    accent: '#8a5a12',
+    motif: 'rows',
+  },
+  {
+    name: 'Bookmark Manager',
+    tagline: 'Find what Chrome counts but never merges.',
+    href: 'https://sanjumsanthosh.github.io/Bookmark-Manager/intro/',
+    meta: 'single html',
+    accent: '#5d6b1f',
+    motif: 'flag',
+  },
+];
+---
+
+<section class="surfaces wrap" aria-labelledby="surfaces-title">
+  <div class="surfaces__head">
+    <p class="eyebrow" id="surfaces-title">Live surfaces</p>
+    <p class="surfaces__note">
+      Six things you can open right now. Each one is a single static page published from its repo —
+      no build step, no analytics.
+    </p>
+  </div>
+
+  <ul class="surfaces__grid">
+    {surfaces.map((s) => (
+      <li>
+        <a class="surface" href={s.href} style={`--surface-accent: ${s.accent}`}>
+          <span class="surface__motif" aria-hidden="true" data-motif={s.motif}>
+            {s.motif === 'bars' && Array.from({ length: 9 }).map((_, i) => <i style={`--h:${[35, 70, 45, 95, 60, 80, 40, 65, 50][i]}%`} />)}
+            {s.motif === 'lines' && Array.from({ length: 5 }).map((_, i) => <i style={`--w:${[70, 92, 55, 84, 40][i]}%`} />)}
+            {s.motif === 'rows' && Array.from({ length: 4 }).map((_, i) => <i style={`--w:${[88, 64, 78, 52][i]}%`} />)}
+            {s.motif === 'arc' && <i />}
+            {s.motif === 'cells' && Array.from({ length: 12 }).map(() => <i />)}
+            {s.motif === 'flag' && <i />}
+          </span>
+
+          <span class="surface__body">
+            <span class="surface__name">{s.name}</span>
+            <span class="surface__tagline">{s.tagline}</span>
+            <span class="surface__meta">
+              <span class="surface__tech">{s.meta}</span>
+              <span class="surface__live">live <span aria-hidden="true">↗</span></span>
+            </span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .surfaces {
+    padding-block: var(--s5) var(--s8);
+  }
+
+  .surfaces__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s5);
+    flex-wrap: wrap;
+    border-top: 1px solid var(--rule);
+    padding-top: var(--s5);
+  }
+
+  .surfaces__note {
+    max-width: 46ch;
+    color: var(--muted);
+    font-size: var(--fs-small);
+  }
+
+  .surfaces__grid {
+    list-style: none;
+    padding: 0;
+    margin: var(--s6) 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s4);
+  }
+
+  .surface {
+    display: flex;
+    gap: var(--s4);
+    height: 100%;
+    padding: var(--s4);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .surface::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--surface-accent);
+    opacity: 0.85;
+  }
+
+  .surface:hover,
+  .surface:focus-visible {
+    border-color: var(--surface-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -18px rgb(20 16 14 / 0.55);
+  }
+
+  .surface:hover .surface__live {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .surface__motif {
+    flex: none;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--surface-accent) 10%, transparent);
+  }
+
+  .surface__motif i {
+    display: block;
+    background: var(--surface-accent);
+    opacity: 0.85;
+  }
+
+  .surface__motif[data-motif='bars'] i {
+    width: 3px;
+    height: var(--h);
+    border-radius: 1px;
+  }
+
+  .surface__motif[data-motif='lines'] i,
+  .surface__motif[data-motif='rows'] i {
+    width: var(--w);
+    height: 2px;
+    border-radius: 1px;
+  }
+
+  .surface__motif[data-motif='lines'] {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .surface__motif[data-motif='rows'] {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .surface__motif[data-motif='arc'] i {
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--surface-accent);
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    transform: rotate(35deg);
+    background: none;
+  }
+
+  .surface__motif[data-motif='flag'] i {
+    width: 14px;
+    height: 18px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%);
+    border-radius: 1px;
+  }
+
+  .surface__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .surface__name {
+    font-weight: 600;
+    font-size: var(--fs-small);
+    letter-spacing: -0.01em;
+  }
+
+  .surface__tagline {
+    color: var(--muted);
+    font-size: var(--fs-meta);
+    line-height: 1.45;
+  }
+
+  .surface__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    margin-top: var(--s2);
+    font-family: var(--mono);
+    font-size: var(--fs-meta);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .surface__tech {
+    color: var(--muted);
+  }
+
+  .surface__live {
+    color: var(--surface-accent);
+  }
+
+  @media (max-width: 900px) {
+    .surfaces__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 620px) {
+    .surfaces__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

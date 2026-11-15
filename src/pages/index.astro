@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Pendulum from '../components/Pendulum.astro';
+import LiveSurfaces from '../components/LiveSurfaces.astro';
 import { getCollection } from 'astro:content';
 
 const projects = (await getCollection('projects')).sort(
@@ -10,12 +11,14 @@ const projects = (await getCollection('projects')).sort(
 const featured = projects.filter((p) => p.data.featured);
 const signature = featured.slice(0, 3);
 const rest = featured.slice(3);
+const live = featured.filter((p) => p.data.links?.demo).length;
 
 const receipts = [
   { n: '5', label: 'years at Oracle' },
   { n: '6', label: 'outstanding evaluations' },
-  { n: '6', label: 'case studies' },
-  { n: '38', label: 'public repositories' },
+  { n: String(projects.length), label: 'case studies' },
+  { n: String(live), label: 'live demos' },
+  { n: '51', label: 'public repositories' },
 ];
 
 const corrections = [
@@ -58,34 +61,37 @@ const capabilities = [
 
 <Base>
   <section class="hero wrap">
-    <div class="hero__meta meta">
-      <span>Kerala, India</span>
-      <span>Backend · retrieval · applied AI</span>
-      <span>Open to senior roles</span>
-    </div>
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <div class="hero__meta meta">
+          <span>Kerala, India</span>
+          <span>Backend · retrieval · applied AI</span>
+          <span>Open to senior roles</span>
+        </div>
 
-    <h1 class="display">
-      I build the parts of AI systems that <em>have to work</em> after the demo.
-    </h1>
+        <h1 class="display">
+          I build the parts of AI systems that <em>have to work</em> after the demo.
+        </h1>
 
-    <p class="hero__lede">
-      Five years at Oracle on backend and platform systems, and the last two on retrieval
-      and agent infrastructure — scoped tools, permissions, guardrails, and the evaluation
-      that tells you whether any of it is actually working.
-    </p>
+        <p class="hero__lede">
+          Five years at Oracle on backend and platform systems, and the last two on retrieval
+          and agent infrastructure — scoped tools, permissions, guardrails, and the evaluation
+          that tells you whether any of it is actually working.
+        </p>
 
-    <div class="hero__actions">
-      <a class="link-arrow" href="/work/">See the work <span aria-hidden="true">→</span></a>
-      <a class="link-arrow" href="/notes/">Field notes <span aria-hidden="true">→</span></a>
-    </div>
+        <div class="hero__actions">
+          <a class="link-arrow" href="/work/">See the work <span aria-hidden="true">→</span></a>
+          <a class="link-arrow" href="/notes/">Field notes <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
 
-    <div style="margin-top: var(--s7); max-width: 640px">
-      <Pendulum />
-      <p class="meta" style="margin-top: var(--s2); text-transform: none; letter-spacing: 0">
-        Every figure on this site is something I actually built. This one is the physics core
-        from <a class="link-plain" href="/work/xr-pendulum-lab/">XR Pendulum Lab</a>, flattened
-        into 2D so it loads in a few hundred bytes of script.
-      </p>
+      <figure class="hero__figure">
+        <Pendulum />
+        <figcaption class="meta">
+          The physics core from <a class="link-plain" href="/work/xr-pendulum-lab/">XR Pendulum
+          Lab</a>, flattened into 2D so it loads in a few hundred bytes of script.
+        </figcaption>
+      </figure>
     </div>
   </section>
 
@@ -99,6 +105,8 @@ const capabilities = [
       ))}
     </div>
   </section>
+
+  <LiveSurfaces />
 
   <section class="section rule-top">
     <div class="wrap">
@@ -173,3 +181,40 @@ const capabilities = [
     </div>
   </section>
 </Base>
+
+<style>
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: var(--s8) var(--s7);
+    align-items: start;
+  }
+
+  .hero__figure {
+    margin: 0;
+    padding: var(--s4);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--paper-raised);
+  }
+
+  .hero__figure figcaption {
+    margin-top: var(--s3);
+    text-transform: none;
+    letter-spacing: 0;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 46ch;
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      gap: var(--s6);
+    }
+
+    .hero__figure {
+      max-width: 560px;
+    }
+  }
+</style>
